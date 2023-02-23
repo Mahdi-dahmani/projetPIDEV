@@ -15,14 +15,14 @@ class DonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_ben')
-            ->add('titre')
-            ->add('qte')
-            ->add('type')
-            ->add('date')
-            ->add('id_local')
-            ->add('id_cat')
-            ->add('save', SubmitType::class,)
+            ->add('id_ben',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('titre',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('qte',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('type',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('date',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('id_local',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            ->add('id_cat',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+           
             ->add('imge', FileType::class, [
                 'label' => 'votre image (PDF file)',
 
@@ -47,7 +47,7 @@ class DonType extends AbstractType
                     ])
                 ],
             ])
-        ;
+            ->add('save', SubmitType::class,);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

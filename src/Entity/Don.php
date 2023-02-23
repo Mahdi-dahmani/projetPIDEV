@@ -46,8 +46,8 @@ class Don
     private ?int $id_local = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"choisir image")]
-    #[Assert\Date]
+    
+    
     private ?string $imge = null;
 
     public function getId(): ?int
