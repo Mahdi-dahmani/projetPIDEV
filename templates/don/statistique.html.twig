@@ -1,0 +1,45 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Statistiques des dons par categorie{% endblock %}
+
+{% block body %}
+    <h1>Statistiques des dons par categorie</h1>
+
+    <canvas id="myChart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var data = {
+            labels: [
+                {% for stat in stats %}
+                    "{{ stat['categorie'] }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'Nombre d\'dons',
+                data: [
+                    {% for stat in stats %}
+                        {{ stat['nbdons'] }},
+                    {% endfor %}
+                ],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

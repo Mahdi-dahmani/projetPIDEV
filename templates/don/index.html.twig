@@ -271,7 +271,7 @@
           <span>Gestion User</span>
         </a>
       
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="/don/">
           <i class="bi bi-grid"></i>
           <span>Gestion Locaux</span>
         </a>
@@ -302,7 +302,7 @@
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="sidebar-nav">
           <li>
-            <a ">
+            <a >
               <i class="bi bi-circle"></i><span>Chart.js</span>
             </a>
           </li>
@@ -335,6 +335,12 @@
         <a class="nav-link collapsed" href="/pdg_generator/">
           <i class="bi bi-envelope"></i>
           <span>pdf</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{path ('app_stattttt')}}">
+          <i class="bi bi-envelope"></i>
+          <span>stat</span>
         </a>
       </li>
 
@@ -424,11 +430,23 @@
                 
 
                 
-                  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <table id="myTable" class="table table-striped">
+              
 
-        
+       
 
-    <table class="table">
+   
         <thead>
             <tr>
                 <th>Id</th>
@@ -444,6 +462,7 @@
             </tr>
         </thead>
         <tbody>
+        <input id="myInput" type="text" value="" name="Search" class="form-control" placeholder=" tfathil bech 7achtek" autofocus>
         {% for don in dons %}
             <tr>
                 <td>{{ don.id }}</td>
@@ -458,8 +477,22 @@
                     <a href="{{ path('app_don_show', {'id': don.id}) }}">show</a>
                     <a href="{{ path('app_don_edit', {'id': don.id}) }}">edit</a>
                     <a href="/don/remove/{{don.id}}">delete</a>
+                    <a href="{{ path('favoris_add', {'id': don.id}) }}" class="btn btn-round btn-danger"><i class="fa fa-heart" style="color: red;"></i> Add to favorite</a>
+</a> <li class="d-flex align-items-center"><a href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}&amp;quote=Check+out+this+awesome+post" target="_blank"><i class="bi bi-facebook"></i></a>
+                  </li> 
+                 <li class="d-flex align-items-center">
+      <a href="https://twitter.com/intent/tweet?url={{ app.request.uri }}&amp;text=Check+out+this+awesome+post" target="_blank">
+        <i class="bi bi-twitter"></i>
+      </a>
+    {# //codee  QR #}
+      <a href="{{ path('bank_get_qr_code', {'id': don.id}) }}"  class="btn btn-outline-primary">Obtenir le code QR</a>
+    </li>
+ 
+                   
+                        
                 </td>
             </tr>
+           
         {% else %}
             <tr>
                 <td colspan="8">no records found</td>
@@ -509,5 +542,18 @@
 
 </body>
 
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/63fe790a4247f20fefe335f2/1gqd0hkhh';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </html>
 {% endblock %}

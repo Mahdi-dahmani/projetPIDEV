@@ -271,7 +271,7 @@
           <span>Gestion User</span>
         </a>
       
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="/don/">
           <i class="bi bi-grid"></i>
           <span>Gestion Locaux</span>
         </a>
@@ -426,7 +426,18 @@
 
         
 
-    <table class="table">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <table id="myTable" class="table table-striped">
     <h1>Categorie index</h1>
         <thead>
             <tr>
@@ -438,6 +449,7 @@
             </tr>
         </thead>
         <tbody>
+        <input id="myInput" type="text" value="" name="Search" class="form-control" placeholder=" tfathil bech 7achtek" autofocus>
         {% for categorie in categories %}
             <tr>
                 <td>{{ categorie.id }}</td>
@@ -498,6 +510,7 @@
   <a href="" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
+
 
 </html>
 {% endblock %}

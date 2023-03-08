@@ -7,6 +7,8 @@ parameters:
        don_directory: '%kernel.project_dir%/public/uploads/donimage'
 
 services:
+    App\Controller\FavorisController:
+        tags: ['controller.service_arguments']
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -18,7 +20,7 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Entity/' 
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed

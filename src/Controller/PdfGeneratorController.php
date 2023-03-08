@@ -6,34 +6,55 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
+use App\Entity\Don;
+use Dompdf\Options;
+
+
+use App\Repository\DonRepository;
  
 class PdfGeneratorController extends AbstractController
 {
-    #[Route('/pdg_generator/', name: 'app_pdf_generator')]
-    public function index(): Response
+    #[Route('/pdg_generator', name: 'app_pdf_generator')]
+    public function pdf(DonRepository $repository)
     {
-        // return $this->render('pdf_generator/index.html.twig', [
-        //     'controller_name' => 'PdfGeneratorController',
-        // ]);
-        $data = [
-            'imageSrc'  => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/profile.png'),
-            'name'         => 'mahdi',
-            'address'      => 'fouchena',
-            'mobileNumber' => '93961193',
-            'email'        => 'mahdi.dahmani@esprit.tn'
-        ];
-        $html =  $this->renderView('pdf_generator/index.html.twig', $data);
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-         
-        return new Response (
-            $dompdf->stream('resume', ["Attachment" => false]),
-            Response::HTTP_OK,
-            ['Content-Type' => 'application/pdf']
-        );
+        {
+            $don=$repository->findAll();
+            
+    
+            // On définit les options du PDF
+            $pdfOptions = new Options();
+            // Police par défaut
+            $pdfOptions->set('defaultFont', 'Arial');
+            $pdfOptions->setIsRemoteEnabled(true);
+    
+            // On instancie Dompdf
+            $dompdf = new Dompdf($pdfOptions);
+            
+    
+            // On génère le html
+            $html = $this->renderView('pdf_generator/index.html.twig',
+                ['don'=>$don ]);
+            //$html = $this->renderView('pdf_generator/index.html.twig',
+                //['don'=>$don ]);
+    //
+    
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+    
+            // On génère un nom de fichier
+            $fichier = 'Tableau des dons.pdf';
+    
+            // On envoie le PDF au navigateur
+            $dompdf->stream($fichier, [
+                'Attachment' => true
+            ]);
+    
+            return new Response();
+        }
     }
  
+   
     private function imageToBase64($path) {
         $path = $path;
         $type = pathinfo($path, PATHINFO_EXTENSION);

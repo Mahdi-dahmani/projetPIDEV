@@ -3,12 +3,17 @@
 namespace App\Controller;
 use App\Entity\Don;
 use App\Form\DonType;
+use Endroid\QrCode\QrCode;
+use App\Repository\DonRepository;
+use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\DonRepository;
+use Endroid\QrCodeBundle\Response\QrCodeResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class FrontController extends AbstractController
 {
     #[Route('/front', name: 'app_front')]
@@ -62,7 +67,42 @@ class FrontController extends AbstractController
         return $this->render('front/affichage_don.html.twig', array("dons"=> $donRepository->findAll(),"form"=>$form->CreateView()));
     }
     
+// #[Route('/Qrcode', name: 'Qrcode')]
 
+public function getQrCodeForProduct(int $id): Response
+{
+    // Récupérer les informations du compte bancaire à partir de la base de données
+    $pr = $this->getDoctrine()->getRepository(Don::class)->find($id);
+
+    if (!$pr) {
+        throw $this->createNotFoundException('Le  produit  n\'existe pas');
+    }
+    $qrText = sprintf(
+        "Nom : %s\n Id benovole : mahdii %s",
+        $pr->getIdBen(),
+        $pr->getTitre(),
+       
+    );
+
+$qrCode = new QrCode($qrText);
+    // Générer le code QR à partir des informations du compte bancaire
+   
+    $qrCode->setSize(300);
+    $qrCode->setMargin(10);
+
+    $pngWriter = new PngWriter();
+    $qrCodeResult = $pngWriter->write($qrCode);
+
+     // Générer la réponse HTTP contenant le code QR
+     $response = new QrCodeResponse($qrCodeResult);
+     $response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+         'qr_code.png'
+     ));
+
+
+    return $response;
+}   
 
 
 

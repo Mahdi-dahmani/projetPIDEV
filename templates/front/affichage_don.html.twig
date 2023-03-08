@@ -46,7 +46,7 @@
 
   <!-- ======= Hero Section ======= -->
   
-  <main id="main">
+
 
     <!-- ======= Why Us Section ======= -->
    
@@ -100,10 +100,28 @@
                 <td>{{ don.date ? don.date|date('Y-m-d') : '' }}</td>
                 <td>{{ don.idLocal }}</td>
                 <td><img src="{{asset ('uploads/donimage/' ~ don.imge)}}" width="150px" height="150px"></td>
+                
                 <td>
                     <a href="{{ path('app_don_show', {'id': don.id}) }}">show</a>
+                    
+                    <a href="/don/remove/{{don.id}}">delete</a>
+                    <a href="{{ path('favoris_add', {'id': don.id}) }}" class="btn btn-round btn-danger"><i class="fa fa-heart" style="color: red;"></i> Add to favorite</a>
+</a> <li class="d-flex align-items-center"><a href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}&amp;quote=Check+out+this+awesome+post" target="_blank"><i class="bi bi-facebook"></i></a>
+                  </li> 
+                 <li class="d-flex align-items-center">
+      <a href="https://twitter.com/intent/tweet?url={{ app.request.uri }}&amp;text=Check+out+this+awesome+post" target="_blank">
+        <i class="bi bi-twitter"></i>
+      </a>
+    {# //codee  QR #}
+      <a href="{{ path('bank_get_qr_code', {'id': don.id}) }}"  class="btn btn-outline-primary">Obtenir le code QR</a>
+    </li>
+
                    
+                     
+                  </li>   
                 </td>
+                   
+             
             </tr>
         {% else %}
             <tr>

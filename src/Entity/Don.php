@@ -5,31 +5,35 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\DonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: DonRepository::class)]
 class Don
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[Groups("dons")]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:"il faut saisir id_ben")]
+    #[Groups("dons")]
     #[Assert\Positive]
     private ?int $id_ben = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank(message:"il faut saisir titre")]
+    #[Groups("dons")]
     private ?string $titre = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:"il faut saisir Qte")]
+    #[Groups("dons")]
     #[Assert\Positive]
     private ?int $qte = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
-    #[Assert\NotBlank(message:"il choisir saisir id_cat")]
+   
     private ?Categorie $id_cat = null;
 
     #[ORM\Column(length: 30)]

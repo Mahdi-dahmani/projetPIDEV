@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
 use App\Entity\Don;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +23,7 @@ class DonType extends AbstractType
             ->add('type',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
             ->add('date',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
             ->add('id_local',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
-            ->add('id_cat',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
+            //->add('id_cat',NULL,array('attr' => array('class' => 'form-control','style' => 'margin-right:5px')))
            
             ->add('imge', FileType::class, [
                 'label' => 'votre image (PDF file)',
@@ -48,6 +50,7 @@ class DonType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class,);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Resume</title>
+    <meta charset="UTF-8">
+    <title>Tableau des Produits</title>
 </head>
-<body>
-    <div style="margin: 0 auto;display: block;width: 500px;">
-        <table width="100%" border="1">
-            <tr>
-                <td colspan="2">
-                    <img src="{{imageSrc}}" style="width:200px;"> 
-                </td>
+<body >
+<h1 style="text-align: center; color: red">sa7tna</h1>
+<h2 style="text-align: center">Tableau des dons</h2>
+
+<table border="1">
+    <thead>
+     <tr>
+                <th>Id</th>
+                <th>Id_ben</th>
+                <th>Titre</th>
+                <th>Qte</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Id_local</th>
+                <th>Image</th>
+
+               
             </tr>
-            <tr>
-                <td>Name:</td>
-                <td>{{name}}</td>
+    </thead>
+    <tbody>
+    {% for don in don %}
+        <tr>
+         <tr>
+                <td>{{ don.id }}</td>
+                <td>{{ don.idBen }}</td>
+                <td>{{ don.titre }}</td>
+                <td>{{ don.qte }}</td>
+                <td>{{ don.type }}</td>
+                <td>{{ don.date ? don.date|date('Y-m-d') : '' }}</td>
+                <td>{{ don.idLocal }}</td>
+               <td> <img src="{{ don.Imge }}"></td>
+                
+        
             </tr>
-            <tr>
-                <td>Address:</td>
-                <td>{{address}}</td>
-            </tr>
-            <tr>
-                <td>Mobile Number:</td>
-                <td>{{mobileNumber}}</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>{{email}}</td>
-            </tr>
-        </table>
-    </div>
+            
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
 </body>
 </html>
